@@ -1,6 +1,6 @@
 # CAT UI Android App v3.0
 
-This repository contains **CAT UI Android App v2.0**.
+This repository contains **CAT UI Android App v3.0**.
 Version 2.0 introduces a **TCP + JSON based communication layer** and an **Advanced NLP Voice Engine** that allows external systems (Python, ROS2, etc.) to control cat expressions and on-screen messages in real time with natural Japanese intonation.
 
 
