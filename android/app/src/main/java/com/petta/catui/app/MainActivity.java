@@ -1,4 +1,4 @@
-package com.petta.catui;
+package com.petta.catui.app;
 
 import android.os.Bundle;
 import android.content.Intent;
@@ -11,9 +11,8 @@ import processing.android.PFragment;
 import processing.android.CompatUtils;
 import processing.core.PApplet;
 
-import com.petta.catui.core.AppletMain;
-
-import com.petta.catui.ui.CATUIApp;
+// 🌟 Configクラスをインポート
+import com.petta.catui.config.VoiceConfig;
 
 public class MainActivity extends AppCompatActivity {
   private PApplet sketch;
@@ -22,11 +21,15 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     
+    // 🌟 アプリ起動の最優先でJSON設定を読み込む！
+    // (this = Context としてActivity自身を渡すことで、assetsフォルダにアクセスできます)
+    VoiceConfig.load(this);
+
     FrameLayout frame = new FrameLayout(this);
     frame.setId(CompatUtils.getUniqueViewId());
     setContentView(frame);
 
-    sketch = new com.petta.catui.ui.CATUIApp();  // ★ YOUR APPLET
+    sketch = new CATUIApp();  // ★ YOUR APPLET
     PFragment fragment = new PFragment(sketch);
     fragment.setView(frame, this);
   }

@@ -4,9 +4,9 @@
 // ・一定時間ごとに耳を上げ下げするアニメーションを付与
 // ・update 内で state を管理し、耳の animProgress を制御する
 // ------------------------------------------------------
-package com.petta.catui.decorators;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 
 public class EarTwitchDecorator extends PartDecorator {
   private int state = 0;    // 0:待機  1:上げ  2:戻し

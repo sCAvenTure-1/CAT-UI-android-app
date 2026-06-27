@@ -3,11 +3,11 @@
 // 「Zzz…」のスリープエフェクト（EmptyPartを基点）
 // ・フォントは共有（Fonts）を使用し、毎フレーム textSize で調整
 // ------------------------------------------------------
-package com.petta.catui.decorators;
-import com.petta.catui.parts.EmptyPart;
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.parts.EmptyPart;
 import com.petta.catui.text.Fonts;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 import processing.core.PApplet;
 import processing.core.PConstants;
 

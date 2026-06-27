@@ -1,8 +1,8 @@
 // Decorator_NikoEyesDecorator.java
 // にこっと細めた笑い目（白目は描かず、細いカーブだけ描く）
-package com.petta.catui.decorators;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 import processing.core.PApplet;
 
 public class NikoEyesDecorator extends PartDecorator {

@@ -4,11 +4,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.petta.catui.core.CatCharacter;
-import com.petta.catui.core.ExpressionState;
+import com.petta.catui.graphics.CatCharacter;
 import com.petta.catui.text.TextDisplay;
-import com.petta.catui.core.AnimalVoicePlayer;
-import com.petta.catui.core.VoiceType; // ★追加：VoiceTypeのインポート
+import com.petta.catui.expression.ExpressionState; // ★ここ重要
+import com.petta.catui.voice.VoiceController;
 
 public class UiEventController {
 
@@ -17,7 +16,8 @@ public class UiEventController {
     private final ConcurrentLinkedQueue<Runnable> uiQueue;
     private final Timer timer = new Timer(true);
 
-    private final AnimalVoicePlayer voicePlayer;
+    // ★変更：Playerを直接持つのではなく、音声司令塔（Controller）を持つ
+    private final VoiceController voiceController;
 
     private TimerTask resetTask;
 
@@ -25,12 +25,12 @@ public class UiEventController {
             CatCharacter character,
             TextDisplay textDisplay,
             ConcurrentLinkedQueue<Runnable> uiQueue,
-            AnimalVoicePlayer voicePlayer) {
+            VoiceController voiceController) { // ★変更
 
         this.character = character;
         this.textDisplay = textDisplay;
         this.uiQueue = uiQueue;
-        this.voicePlayer = voicePlayer;
+        this.voiceController = voiceController; // ★変更
     }
 
     public void onEvent(UiEvent event) {
@@ -39,7 +39,7 @@ public class UiEventController {
             textDisplay.showMessage("UiEventController.onEvent() CALLED");
         });
 
-        // UI操作はキュー経由
+        // UI操作（表情と文字表示）はキュー経由でメインスレッドへ
         uiQueue.add(() -> {
             if (event.face != null) {
                 character.setExpression(event.face);
@@ -47,27 +47,10 @@ public class UiEventController {
             if (event.text != null && !event.text.isEmpty()) {
                 textDisplay.showMessage(event.text);
             }
-        });
-
-        // 🌟オリジナル準拠：表情に合わせて VoiceType（声の高さ）と読み上げ速度（文字数/秒）を切り替える
-        if (event.text != null && !event.text.isEmpty() && voicePlayer != null) {
-            VoiceType type = VoiceType.HIGH; // デフォルトの声
-            int speed = 10;                 // デフォルトの速度（1秒間に10文字）
-
-            if (event.face != null) {
-                String faceStr = event.face.name();
-                if ("HAPPY".equalsIgnoreCase(faceStr) || "SMILE".equalsIgnoreCase(faceStr)) {
-                    type = VoiceType.HIGHHIGH; // 高い声
-                    speed = 12;                // 少し早口
-                } else if ("SLEEPING".equalsIgnoreCase(faceStr)) {
-                    type = VoiceType.LOW;      // 低い声
-                    speed = 5;                 // ゆっくり
-                }
+            if (event.text != null && !event.text.isEmpty() && voiceController != null) {
+                voiceController.speak(event.text, event.face);
             }
-
-            // オリジナルのロジックに完全準拠した再生メソッドを呼び出す
-            voicePlayer.playVoice(event.text, type, speed);
-        }
+        });
 
         // reset_after 処理
         if (resetTask != null) {

@@ -1,7 +1,10 @@
-package com.petta.catui.core;
-import com.petta.catui.parts.Mouth;
+package com.petta.catui.expression;
+import com.petta.catui.graphics.parts.Mouth;
+import com.petta.catui.graphics.FacePartFactory;
+import com.petta.catui.graphics.UIComponent;
+import com.petta.catui.graphics.CompositeFacePart;
 
-class ExpressionBuilder {
+public class ExpressionBuilder {
     private final FacePartFactory factory;
     private final CompositeFacePart face = new CompositeFacePart();
 

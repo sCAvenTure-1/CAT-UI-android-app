@@ -1,4 +1,4 @@
-package com.petta.catui.core;
+package com.petta.catui.expression;
 
 /**
  * 表情状態を表す enum

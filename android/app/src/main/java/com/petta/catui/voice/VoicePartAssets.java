@@ -1,4 +1,4 @@
-package com.petta.catui.core;
+package com.petta.catui.voice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ public final class VoicePartAssets {
     private static final Map<String, String> PART_TO_FILE_NAME = new HashMap<>();
 
     static {
-        // オリジナルの完全なマッピング
+        // オリジナルの完全なマッピング（完璧です！）
         PART_TO_FILE_NAME.put("あ", "a"); PART_TO_FILE_NAME.put("い", "i"); PART_TO_FILE_NAME.put("う", "u");
         PART_TO_FILE_NAME.put("うぃ", "wi"); PART_TO_FILE_NAME.put("うぇ", "we"); PART_TO_FILE_NAME.put("うぉ", "uwo");
         PART_TO_FILE_NAME.put("え", "e"); PART_TO_FILE_NAME.put("お", "o");
@@ -57,15 +57,34 @@ public final class VoicePartAssets {
     }
 
     public static String fileNameFor(String part) {
-        return part; // ローマ字そのまま返す
+        return part;
     }
 
-    // オリジナルの createSegments を再現（"っ"変換と無音処理）
+    /**
+     * 🌟 ユーティリティ：カタカナが混ざっていても強制的にひらがなに変換する
+     */
+    private static String forceHiragana(String text) {
+        if (text == null) return null;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (c >= '\u30a1' && c <= '\u30f6') {
+                sb.append((char) (c - 0x60));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
     public static List<String> createSegments(String text) {
         List<String> segments = new ArrayList<>();
         if (text == null) return segments;
 
-        String replacedText = text.replace("っ", "つ");
+        // 🌟 ここで必ずひらがな化されるため、カタカナ漏れバグが完全に消滅します！
+        String hiraText = forceHiragana(text);
+        String replacedText = hiraText.replace("っ", "つ");
+        
         int i = 0;
 
         while (i < replacedText.length()) {

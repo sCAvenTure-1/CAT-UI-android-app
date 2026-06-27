@@ -1,6 +1,7 @@
-package com.petta.catui.core;
+package com.petta.catui.expression;
 
 import java.util.function.Function;
+import com.petta.catui.graphics.FacePartFactory;
 
 public class ExpressionConfig {
   public final String name;

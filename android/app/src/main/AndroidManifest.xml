@@ -12,7 +12,7 @@
         android:label="CAT_android_app">
 
     <activity
-        android:name=".MainActivity"
+        android:name=".app.MainActivity"
         android:exported="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
         android:configChanges="orientation|screenSize|keyboardHidden">        

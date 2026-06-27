@@ -1,6 +1,6 @@
 // Ears.java
-package com.petta.catui.parts;
-import com.petta.catui.core.FacePart;  
+package com.petta.catui.graphics.parts;
+import com.petta.catui.graphics.FacePart;  
 import processing.core.PApplet;
 
 public class Ears extends FacePart {          // ← public に

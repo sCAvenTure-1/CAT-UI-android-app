@@ -5,8 +5,8 @@
 // ・装飾対象（decoratedPart）に update/draw を委譲する基本実装を持つ
 // ・アニメ進行度も委譲できるようにしてある
 // ------------------------------------------------------
-package com.petta.catui.core;
-import com.petta.catui.core.FacePart;
+package com.petta.catui.graphics;
+import com.petta.catui.graphics.FacePart;
 
 public abstract class PartDecorator extends FacePart {
   protected final FacePart decoratedPart; // 装飾対象のパーツ

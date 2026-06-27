@@ -3,7 +3,7 @@ package com.petta.catui.comm;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import com.petta.catui.core.ExpressionState;
+import com.petta.catui.expression.ExpressionState;
 
 public class JsonUiEventParser {
 

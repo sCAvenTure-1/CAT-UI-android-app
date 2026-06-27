@@ -4,8 +4,8 @@
 // 「何もしない」プレースホルダパーツ。
 // 例：new QuestionMarkDecorator(app, s) の内部で new EmptyPart(app, s) を渡す。
 // ------------------------------------------------------
-package com.petta.catui.parts;
-import com.petta.catui.core.FacePart;
+package com.petta.catui.graphics.parts;
+import com.petta.catui.graphics.FacePart;
 import processing.core.PApplet;
 
 public class EmptyPart extends FacePart {

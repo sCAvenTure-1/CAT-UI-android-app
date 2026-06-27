@@ -45,6 +45,11 @@ android {
     aaptOptions {
         noCompress "tflite"
         noCompress "lite"
+    }
+    packagingOptions {
+        pickFirst 'META-INF/CONTRIBUTORS.md'
+        pickFirst 'META-INF/LICENSE.md'
+        pickFirst 'META-INF/NOTICE.md'
     }  
 }
 
@@ -55,5 +60,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation 'junit:junit:4.13'
+    implementation 'com.atilika.kuromoji:kuromoji-unidic:0.9.0'
 }
-

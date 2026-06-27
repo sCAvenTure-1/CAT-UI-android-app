@@ -1,0 +1,9 @@
+{
+  "highPitch": 0.25,
+  "lowPitch": -0.25,
+  "questionPitch": 1.80,
+  "randomFluctuation": 0.06,
+  "baseSpeed": 1.0,
+  "charInterval": 0.0,
+  "targetVoiceDir": "voice_high_speed3"
+}

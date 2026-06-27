@@ -1,21 +1,18 @@
-package com.petta.catui.ui;
+package com.petta.catui.app;
 
 import processing.core.PApplet;
 
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.petta.catui.core.CatCharacter;
+import com.petta.catui.graphics.CatCharacter;
 import com.petta.catui.text.TextDisplay;
-
-// ★ 通信関連
 import com.petta.catui.comm.UiEventController;
 import com.petta.catui.comm.SocketReceiver;
 import com.petta.catui.comm.UiInputSender;
-
-// 🌟追加: 音声プレイヤーをインポート
-import com.petta.catui.core.AnimalVoicePlayer;
+import com.petta.catui.voice.AnimalVoicePlayer;
+import com.petta.catui.voice.VoiceController;
+import com.petta.catui.expression.ExpressionState;
 
 public class CATUIApp extends PApplet {
 
@@ -29,8 +26,9 @@ public class CATUIApp extends PApplet {
   private UiEventController uiEventController;
   private SocketReceiver socketReceiver;
 
-  // 🌟追加: 音声プレイヤーの変数
+  // 🌟音声系の変数を集約
   private AnimalVoicePlayer voicePlayer;
+  private VoiceController voiceController; // ★追加: 新しい音声司令塔
 
   private final ConcurrentLinkedQueue<Runnable> uiQueue = new ConcurrentLinkedQueue<>();
 
@@ -51,12 +49,14 @@ public class CATUIApp extends PApplet {
 
     textDisplay.setAutoAdvance(true, 2.5f);
 
-    // 🌟追加: 音声プレイヤーを初期化
-    // PApplet内では getActivity() を使うと、AndroidのContextを取得できます
+    // 🌟1. 音声再生プレイヤー（物理再生担当）を初期化
     voicePlayer = new AnimalVoicePlayer(getActivity());
 
-    // 🌟修正: voicePlayer を UiEventController に渡す
-    uiEventController = new UiEventController(character, textDisplay, uiQueue, voicePlayer);
+    // 🌟2. 音声操作の司令塔（ロジック担当）を初期化し、プレイヤーを渡す
+    voiceController = new VoiceController(voicePlayer);
+
+    // 🌟3. UIイベントコントローラーに、voicePlayerの代わりにvoiceControllerを渡す
+    uiEventController = new UiEventController(character, textDisplay, uiQueue, voiceController);
 
     socketReceiver = new SocketReceiver(9000, uiEventController);
     socketReceiver.start();
@@ -67,7 +67,7 @@ public class CATUIApp extends PApplet {
   @Override
   public void draw() {
 
-    // ★ サイズ変化検知（最重要）
+    // ★ サイズ変化検知
     if (width != lastW || height != lastH) {
       lastW = width;
       lastH = height;
@@ -93,11 +93,6 @@ public class CATUIApp extends PApplet {
   }
 
   @Override
-  public void mousePressed() {
-    UiInputSender.sendTouch(mouseX, mouseY);
-  }
-
-  @Override
   public void exit() {
     if (socketReceiver != null)
       socketReceiver.shutdown();
@@ -106,4 +101,5 @@ public class CATUIApp extends PApplet {
     timer.cancel();
     super.exit();
   }
+  
 }

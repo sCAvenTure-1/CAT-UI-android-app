@@ -1,5 +1,5 @@
 // UIComponent.java
-package com.petta.catui.core;
+package com.petta.catui.graphics;
 
 public interface UIComponent {
   void update();

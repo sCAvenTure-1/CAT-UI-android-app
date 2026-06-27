@@ -1,5 +1,5 @@
 // FacePart.java
-package com.petta.catui.core;
+package com.petta.catui.graphics;
 import processing.core.PApplet;
 import processing.core.*;
 

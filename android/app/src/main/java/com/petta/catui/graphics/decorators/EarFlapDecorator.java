@@ -1,6 +1,6 @@
-package com.petta.catui.decorators;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 
 public class EarFlapDecorator extends PartDecorator {
   private static final float UP_SPEED = 0.15f;
@@ -10,7 +10,7 @@ public class EarFlapDecorator extends PartDecorator {
   private float localAnim = 0f;
 
   public EarFlapDecorator(FacePart part) { super(part); }
-
+  
   @Override
   public void update() {
     if (state == 1) {

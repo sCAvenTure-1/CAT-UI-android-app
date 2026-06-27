@@ -1,8 +1,8 @@
 // Eyes.java
-package com.petta.catui.parts;
+package com.petta.catui.graphics.parts;
 import processing.core.PApplet;
 import processing.core.PConstants;
-import com.petta.catui.core.FacePart;  
+import com.petta.catui.graphics.FacePart; 
 
 public class Eyes extends FacePart {
   private final float w, h;           // ← 「素の直径」(s を掛けない)

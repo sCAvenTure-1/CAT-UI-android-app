@@ -1,6 +1,6 @@
-package com.petta.catui.decorators;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 import processing.core.PApplet;
 
 public class SleepEyesDecorator extends PartDecorator {

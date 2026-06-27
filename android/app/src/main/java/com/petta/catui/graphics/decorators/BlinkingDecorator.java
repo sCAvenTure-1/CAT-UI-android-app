@@ -4,9 +4,9 @@
 // ・短い間だけ目を閉じる矩形を描画し、通常時は元の目を描画
 // ・update は特に不要なので draw のみオーバーライド
 // ------------------------------------------------------
-package com.petta.catui.decorators;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 import processing.core.PApplet;
 import processing.core.PConstants;
 

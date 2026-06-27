@@ -1,6 +1,6 @@
-package com.petta.catui.parts;
+package com.petta.catui.graphics.parts;
 import processing.core.PApplet;
-import com.petta.catui.core.FacePart;
+import com.petta.catui.graphics.FacePart;
 
 public class Nose extends FacePart {
   private final float w, h;

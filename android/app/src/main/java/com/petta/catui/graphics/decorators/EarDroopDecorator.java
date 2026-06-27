@@ -1,6 +1,6 @@
-package com.petta.catui.decorators;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 
 public class EarDroopDecorator extends PartDecorator {
   public EarDroopDecorator(FacePart part) { super(part); }

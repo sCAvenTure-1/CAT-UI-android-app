@@ -1,19 +1,12 @@
-package com.petta.catui.core;
+package com.petta.catui.voice;
+
+import com.petta.catui.config.VoiceConfig;
 
 public enum VoiceType {
-    HIGH("high", "voice_high_speed3"),
-    HIGHHIGH("highhigh", "voice_high_speed5"),
-    LOW("low", "voice_low_speed2");
+    DEFAULT; // もう1種類だけでOK
 
-    private final String value;
-    private final String directoryName;
-
-    VoiceType(String value, String directoryName) {
-        this.value = value;
-        this.directoryName = directoryName;
-    }
-
+    // 🌟 常にJSONで設定されたフォルダ名を返す
     public String directoryName() {
-        return directoryName;
+        return VoiceConfig.TARGET_VOICE_DIR;
     }
 }

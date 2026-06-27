@@ -1,86 +1,76 @@
-package com.petta.catui.core;
+package com.petta.catui.voice;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 
+import com.petta.catui.nlp.IntonationAnalyzer.VoiceSegment;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AnimalVoicePlayer {
-    private SoundPool soundPool;
-    // VoiceType ごとに音源IDを管理するマップ
-    private Map<VoiceType, Map<String, Integer>> voiceMaps;
-    private Context context;
+    private final Context context;
+    private final SoundPool soundPool;
+    private final Map<String, Integer> soundMap = new HashMap<>();
 
     public AnimalVoicePlayer(Context context) {
         this.context = context;
-        AudioAttributes attributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+
+        AudioAttributes attrs = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .build();
+        this.soundPool = new SoundPool.Builder()
+                .setMaxStreams(5)
+                .setAudioAttributes(attrs)
                 .build();
 
-        soundPool = new SoundPool.Builder()
-                // 🌟修正ポイント1：同時に重なって鳴る音の上限を 10 から 32 に大幅アップ！
-                // これにより、前の音が鳴り終わる前に次の音が来ても強制カットされにくくなります。
-                .setMaxStreams(32)
-                .setAudioAttributes(attributes)
-                .build();
-
-        voiceMaps = new HashMap<>();
-        loadAllSounds();
+        loadAssetVoices();
     }
 
-    private void loadAllSounds() {
-        AssetManager assets = context.getAssets();
-        List<String> allParts = VoicePartAssets.supportedParts();
-
-        // HIGH, HIGHHIGH, LOW すべてのフォルダをロードする
+    private void loadAssetVoices() {
         for (VoiceType type : VoiceType.values()) {
-            Map<String, Integer> map = new HashMap<>();
-            for (String part : allParts) {
-                try {
-                    // assets/voice/voice_high_speed3/a.mp3 のようなパスを作る
-                    String fileName = "voice/" + type.directoryName() + "/" + VoicePartAssets.fileNameFor(part) + ".mp3";
-                    AssetFileDescriptor afd = assets.openFd(fileName);
-                    int soundId = soundPool.load(afd, 1);
-                    map.put(part, soundId);
-                } catch (Exception e) {
-                    // ファイルがない場合は無視
+            for (String part : VoicePartAssets.supportedParts()) {
+                String fileName = VoicePartAssets.fileNameFor(part);
+                String assetPath = "voice/" + type.directoryName() + "/" + fileName + ".mp3";
+                try (AssetFileDescriptor afd = context.getAssets().openFd(assetPath)) {
+                    soundMap.put(key(type, part), soundPool.load(afd, 1));
+                } catch (IOException e) {
+                    System.err.println("[AnimalVoicePlayer] missing voice asset: " + assetPath);
                 }
             }
-            voiceMaps.put(type, map);
         }
     }
 
-    // オリジナルの generate(text, speed, voiceType) に相当
-    public void playVoice(String text, VoiceType voiceType, int speed) {
-        List<String> parsedParts = VoicePartAssets.createSegments(text);
-        Map<String, Integer> currentVoiceMap = voiceMaps.get(voiceType);
+    private String key(VoiceType type, String part) {
+        return type.directoryName() + "/" + part;
+    }
 
+    public void playVoice(List<VoiceSegment> segments, VoiceType type, float globalSpeed) {
         new Thread(() -> {
-            for (String part : parsedParts) {
-                // 沈黙処理（オリジナル通り 500ms）
-                if (part.equals("SILENCE")) {
-                    try { Thread.sleep(500); } catch (InterruptedException e) {}
-                    continue;
-                }
+            try {
+                for (VoiceSegment segment : segments) {
+                    if ("SILENCE".equals(segment.part)) {
+                        Thread.sleep(150);
+                        continue;
+                    }
 
-                // 音声再生
-                if (currentVoiceMap != null && currentVoiceMap.containsKey(part)) {
-                    int soundId = currentVoiceMap.get(part);
-                    soundPool.play(soundId, 1.0f, 1.0f, 1, 0, 1.0f);
-                }
+                    Integer soundId = soundMap.get(key(type, segment.part));
+                    if (soundId != null) {
+                        float finalRate = segment.pitch * globalSpeed;
+                        if (finalRate < 0.5f) finalRate = 0.5f;
+                        if (finalRate > 2.0f) finalRate = 2.0f;
 
-                // 速度（speed: 1秒間に何文字読み上げるか）に応じた待機
-                try {
-                    // 🌟修正ポイント2：計算された待機時間に 40ms の「ゆとり」を足す
-                    long delayMs = (1000 / speed) + 20; 
-                    Thread.sleep(delayMs);
-                } catch (InterruptedException e) {}
+                        soundPool.play(soundId, 1.0f, 1.0f, 1, 0, finalRate);
+                        Thread.sleep((long) (120 / finalRate));
+                    }
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }).start();
     }

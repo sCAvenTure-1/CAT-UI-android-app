@@ -5,11 +5,11 @@
 // ・フォントは共有（Fonts.ensureLoaded/app.textFont(Fonts.funwari())）
 // ------------------------------------------------------
 
-package com.petta.catui.decorators;
-import com.petta.catui.parts.EmptyPart;
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.parts.EmptyPart;
 import com.petta.catui.text.Fonts;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 
 import processing.core.PApplet;
 import processing.core.PConstants;

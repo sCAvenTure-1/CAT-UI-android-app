@@ -1,7 +1,7 @@
 // Whiskers.java
-package com.petta.catui.parts;
+package com.petta.catui.graphics.parts;
 import processing.core.PApplet;
-import com.petta.catui.core.FacePart;
+import com.petta.catui.graphics.FacePart;
 
 public class Whiskers extends FacePart {        // ← public に
   public Whiskers(PApplet app, float s) {       // ← public (PApplet,float) を用意

@@ -1,8 +1,8 @@
 // Mouth.java
-package com.petta.catui.parts;
+package com.petta.catui.graphics.parts;
 import processing.core.PApplet;
 import processing.core.PConstants;
-import com.petta.catui.core.FacePart;
+import com.petta.catui.graphics.FacePart;
 
 public class Mouth extends FacePart {
   // "normal" | "happy" | "surprised" | "nikoSmile"

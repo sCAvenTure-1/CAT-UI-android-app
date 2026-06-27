@@ -1,5 +1,5 @@
 // CompositeFacePart.java
-package com.petta.catui.core;
+package com.petta.catui.graphics;
 import java.util.*;               // List/ArrayList等を使っていれば
 import processing.core.*;   
 

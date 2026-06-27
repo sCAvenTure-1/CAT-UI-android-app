@@ -2,9 +2,14 @@
 // CatCharacter.java
 // 表情制御の中核クラス（再構築型・Java8対応）
 // =============================================================================
-package com.petta.catui.core;
+package com.petta.catui.graphics;
 
 import processing.core.PApplet;
+import com.petta.catui.expression.IExpressionState;
+import com.petta.catui.expression.ExpressionConfig;
+import com.petta.catui.expression.ExpressionRegistry;
+import com.petta.catui.expression.ExpressionState;
+import com.petta.catui.expression.ExpressionBuilder;
 
 public class CatCharacter {
 

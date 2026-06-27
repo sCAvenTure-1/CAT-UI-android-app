@@ -2,9 +2,9 @@
 // 大きめの白目を描いたうえで、上にキラキラを重ねるデコレータ
 // ・基底 Eyes は描かず、このデコレータが目そのものを描く
 // ・キラキラは白で塗りつぶし＋黒の縁取りで必ず見える
-package com.petta.catui.decorators;
-import com.petta.catui.core.PartDecorator;
-import com.petta.catui.core.FacePart; 
+package com.petta.catui.graphics.decorators;
+import com.petta.catui.graphics.PartDecorator;
+import com.petta.catui.graphics.FacePart;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
