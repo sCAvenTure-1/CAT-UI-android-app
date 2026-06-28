@@ -2,7 +2,7 @@ package com.petta.catui.voice;
 
 import com.petta.catui.expression.ExpressionState;
 import com.petta.catui.nlp.IntonationAnalyzer;
-import com.petta.catui.nlp.IntonationAnalyzer.VoiceSegment;
+import com.petta.catui.voice.VoiceSegment;
 import com.petta.catui.config.VoiceConfig;
 
 import java.util.List;
